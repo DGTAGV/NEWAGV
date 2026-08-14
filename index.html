@@ -3,15 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <!-- 모바일 Full Screen 설정 -->
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#020617">
+  
 
     <title>AGV CHEAT SHEET</title>
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icon.png">
     
     <style>
     :root { 
@@ -94,15 +88,29 @@
     }
     input:focus { border-color: var(--primary); box-shadow: 0 0 15px rgba(59, 130, 246, 0.3); }
     
+ 
     .ad-banner-container {
         width: 100%;
-        min-height: 105px;
         margin-bottom: 20px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        overflow: hidden;
+    }
+    .coupang-link {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        transition: transform 0.1s;
+    }
+    .coupang-link:active {
+        transform: scale(0.98);
+    }
+    .coupang-img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.4);
     }
 
     .search-btn { 
@@ -199,9 +207,11 @@
             <input type="number" id="errorCode" placeholder="코드 1~3자리 입력" onkeypress="if(event.keyCode==13) check()" onfocus="this.value=''">
         </div>
 
-        <!-- 쿠팡 배너 영역 -->
         <div class="ad-banner-container">
-            <div id="coupang-banner"></div>
+            <a href="https://link.coupang.com/a/gc9m1nTDz2" target="_blank" referrerpolicy="unsafe-url" class="coupang-link">
+               
+                <img src="banner.png" alt="쿠팡 배너" class="coupang-img">
+            </a>
             <p style="margin-top: 5px; font-size: 10px; color: #475569; text-align: center; margin-bottom: 0;">
                 쿠팡 파트너스 활동 수수료를 제공받음
             </p>
@@ -218,28 +228,8 @@
     </div>
 </div>
 
-<!-- 쿠팡 파트너스 스크립트 수동 로드 -->
-<script src="https://ads-partners.coupang.com/g.js"></script>
 <script>
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('sw.js');
-    }
-
-    // 쿠팡 배너 안정적 실행
-    window.addEventListener('load', function() {
-        try {
-            new PartnersCoupang.G({
-                "id": 962819,
-                "template": "carousel",
-                "trackingCode": "AF5272609",
-                "width": "360",
-                "height": "80",
-                "container": "coupang-banner"
-            });
-        } catch (e) {
-            console.log("쿠팡 배너 로딩 실패 (애드블록 사용 중이거나 네트워크 확인 필요)");
-        }
-    });
+    
 
     let currentLang = 'ko';
 
@@ -711,7 +701,7 @@
             resultDiv.innerHTML = output;
 
         } else if (code === "720") {
-            // 영문일 때는 알람 없는 코드로 처리
+     
             if (currentLang === 'en') {
                 resultDiv.innerText = uiText['en'].unknown;
                 return;
@@ -721,12 +711,12 @@
             output += `<div class="lotto-row" style="padding: 10px;">`;
             output += `<span style="font-weight: bold; color: #f8fafc; margin-right: 10px; font-size: 1.1rem;">각조</span>`;
             
-            // 연금복권 각 자리별 고유 색상 (빨강, 주황, 노랑, 파랑, 보라, 회색)
+       
             const pensionColors = ["#ef4444", "#f97316", "#eab308", "#3b82f6", "#a855f7", "#64748b"];
             for (let i = 0; i < 6; i++) {
-                // 0~9 랜덤 추출
+           
                 let r = Math.floor(Math.random() * 10);
-                // 노란색(인덱스 2)일 때만 글씨를 어둡게
+              
                 let textColor = (i === 2) ? "#1e293b" : "white";
                 output += `<span class="lotto-ball" style="background:${pensionColors[i]}; color:${textColor};">${r}</span>`;
             }
